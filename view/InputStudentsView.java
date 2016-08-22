@@ -6,95 +6,110 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
-import controller.MainMenuController;
+import controller.StudentController;
 import model.Model;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
+
+import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.JComboBox;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.ListModel;
 
-public class MainMenuView extends JPanel implements ActionListener, KeyListener  {
+public class InputStudentsView extends JPanel implements ActionListener, KeyListener  {
 
 	private MainFrame mainFrame;
 	
 	/** Controller */
-	private MainMenuController controller;
+	private StudentController controller;
+	
 	private JTextField txtfldNumOfGroups;
-	private JTextField txtfldStudentQuery;
 	private	JList jListOfStudents;
 	private JButton btnAddGroupCount;
 	private JButton btnSubGroupCount;
 	private JButton btnCreateGroup;
 	private JButton btnAddStudent;
-	private JButton btnViewStudent;
-	private JButton btnQueryStudent;
-	private JButton btnClearQuery;
 	
-	public MainMenuView(MainFrame mainFrame) {
+	private JTable resultTable;
+	private JScrollPane jscrllpnlTable;
+	
+	public InputStudentsView(MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
 		this.setBounds(0, 0, 683, 434);
 		setLayout(null);
 		
-		controller = new MainMenuController(this);
+		controller = new StudentController(mainFrame, this);
 		
-		/** INITIALIZE LIST OF STUDENTS */
-		jListOfStudents = new JList((ListModel) Model.getListOfStudents());
-		jListOfStudents.setBounds(24, 22, 477, 313);
-		add(jListOfStudents);
+		/** Initial model for table */
+        String [] header={};
+        String [][] data={};
+        DefaultTableModel tableModel = new DefaultTableModel(data,header);
+        
+        /** JTable setup */
+        resultTable = new JTable(tableModel);
+//        resultTable.setPreferredScrollableViewportSize(new Dimension(450,63));
+        resultTable.setFillsViewportHeight(true);
+		refreshStudentList();
+        
+        jscrllpnlTable=new JScrollPane(resultTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        // jscrllpnlTable.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+         jscrllpnlTable.setBounds(24, 22, 477, 313);
+         jscrllpnlTable.setVisible(true);
+         add(jscrllpnlTable);
 		
 		JLabel lblNumberOfGroups = new JLabel("Number of Groups");
+		lblNumberOfGroups.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblNumberOfGroups.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNumberOfGroups.setBounds(511, 102, 102, 14);
+		lblNumberOfGroups.setBounds(511, 89, 102, 27);
 		add(lblNumberOfGroups);
 		
 		btnAddGroupCount = new JButton("+");
 		btnAddGroupCount.setBounds(597, 127, 76, 54);
+		btnAddGroupCount.addActionListener(this);
 		add(btnAddGroupCount);
 		
 		btnSubGroupCount = new JButton("-");
+		btnSubGroupCount.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnSubGroupCount.setBounds(511, 127, 76, 54);
+		btnSubGroupCount.addActionListener(this);
 		add(btnSubGroupCount);
 		
 		txtfldNumOfGroups = new JTextField();
-		txtfldNumOfGroups.setBounds(623, 99, 32, 17);
+		txtfldNumOfGroups.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		txtfldNumOfGroups.setText("1");
+		txtfldNumOfGroups.setBounds(623, 89, 36, 27);;
+		txtfldNumOfGroups.addActionListener(this);
 		add(txtfldNumOfGroups);
 		txtfldNumOfGroups.setColumns(10);
 		
-		btnCreateGroup = new JButton("Create Group");
+		btnCreateGroup = new JButton("Create Groups");
+		btnCreateGroup.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnCreateGroup.setBounds(511, 192, 162, 66);
+		btnCreateGroup.addActionListener(this);
 		add(btnCreateGroup);
 		
 		btnAddStudent = new JButton("Add Student");
+		btnAddStudent.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnAddStudent.setBounds(24, 346, 193, 66);
+		btnAddStudent.addActionListener(this);
 		add(btnAddStudent);
-		
-		btnViewStudent = new JButton("View Student");
-		btnViewStudent.setBounds(227, 346, 193, 66);
-		add(btnViewStudent);
-		
-		txtfldStudentQuery = new JTextField();
-		txtfldStudentQuery.setBounds(430, 346, 243, 20);
-		add(txtfldStudentQuery);
-		txtfldStudentQuery.setColumns(10);
-		
-		btnQueryStudent = new JButton("Query Student");
-		btnQueryStudent.setBounds(430, 373, 126, 39);
-		add(btnQueryStudent);
-		
-		btnClearQuery = new JButton("Clear Query");
-		btnClearQuery.setBounds(555, 373, 118, 39);
-		add(btnClearQuery);
 	}
 
 	public int getNumberOfGroups(){
-		int input = 0;
+		int input = 1;
+		String inputString = txtfldNumOfGroups.getText();
+		if(inputString.equals(""))
+			inputString="1";
 		try{
 			input = Integer.valueOf(txtfldNumOfGroups.getText());
 		}catch(NumberFormatException e){
@@ -123,12 +138,16 @@ public class MainMenuView extends JPanel implements ActionListener, KeyListener 
 		else if(ae.getSource() == btnSubGroupCount){
 			int numOfGroups = getNumberOfGroups();
 			numOfGroups--;
-			if(numOfGroups<0){
-				numOfGroups=0;
+			if(numOfGroups<1){
+				numOfGroups=1;
 			}
 			txtfldNumOfGroups.setText(String.valueOf(numOfGroups));
-		} else if(ae.getSource() == btnClearQuery){
-			txtfldStudentQuery.setText("");
+		} 
+		else if(ae.getSource() == btnAddStudent){
+			controller.viewAddStudent();
+		}
+		else if(ae.getSource()== btnCreateGroup){
+			controller.createGroups(getNumberOfGroups());
 		}
 	}
 
@@ -145,5 +164,13 @@ public class MainMenuView extends JPanel implements ActionListener, KeyListener 
 
 	@Override
 	public void keyTyped(KeyEvent ke) {
+	}
+
+	public void refreshStudentList() {
+	    DefaultTableModel model = new DefaultTableModel();
+
+	    model = controller.getStudentsTableModel();
+	    
+		resultTable.setModel(model);
 	}
 }

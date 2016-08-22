@@ -2,6 +2,11 @@ package view;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+import com.seaglasslookandfeel.*;
+
+import controller.ResultController;
 
 public class MainFrame extends JFrame {
 
@@ -17,15 +22,21 @@ public class MainFrame extends JFrame {
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 	}
-
-	public void renderView(String view) {
-		if(view.equals("Main Menu")) {
-			currentPanel = new MainMenuView(this); 
-		}
-		frameRevalidate();
-		this.setContentPane((JPanel) currentPanel);
 	
-                
+	public void renderView(String view) {
+		if(view.equals("InputStudents")) {
+			currentPanel = new InputStudentsView(this); 
+		}
+		this.setContentPane((JPanel) currentPanel);        
+		frameRevalidate();   
+    }
+
+	public void renderView(String view, int numOfGroups) {
+		if(view.equals("resultController")){
+			currentPanel = new GroupingResultView(new ResultController(this, numOfGroups));
+		}
+		this.setContentPane((JPanel) currentPanel);        
+		frameRevalidate();   
     }
 	
 	private void frameRevalidate() {
