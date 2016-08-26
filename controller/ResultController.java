@@ -54,7 +54,7 @@ public class ResultController{
 //                        System.out.println(student.getName());
 //                    }
 //                    System.out.println("");
-                    resultMap.put("Group " + cluster.getId(), output);
+                    resultMap.put("Group " + (cluster.getId()+1), output);
                 }
 	}
         
