@@ -45,7 +45,7 @@ public class InputStudentsView extends JPanel implements ActionListener, KeyList
 	
 	public InputStudentsView(MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
-		this.setBounds(0, 0, 683, 434);
+		this.setBounds(0, 0, 875, 434);
 		setLayout(null);
 		
 		controller = new StudentController(mainFrame, this);
@@ -63,38 +63,38 @@ public class InputStudentsView extends JPanel implements ActionListener, KeyList
         
         jscrllpnlTable=new JScrollPane(resultTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         // jscrllpnlTable.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-         jscrllpnlTable.setBounds(24, 22, 477, 313);
+         jscrllpnlTable.setBounds(24, 22, 669, 313);
          jscrllpnlTable.setVisible(true);
          add(jscrllpnlTable);
 		
 		JLabel lblNumberOfGroups = new JLabel("Number of Groups");
 		lblNumberOfGroups.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblNumberOfGroups.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNumberOfGroups.setBounds(511, 89, 102, 27);
+		lblNumberOfGroups.setBounds(717, 88, 102, 27);
 		add(lblNumberOfGroups);
 		
 		btnAddGroupCount = new JButton("+");
-		btnAddGroupCount.setBounds(597, 127, 76, 54);
+		btnAddGroupCount.setBounds(789, 126, 76, 54);
 		btnAddGroupCount.addActionListener(this);
 		add(btnAddGroupCount);
 		
 		btnSubGroupCount = new JButton("-");
 		btnSubGroupCount.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		btnSubGroupCount.setBounds(511, 127, 76, 54);
+		btnSubGroupCount.setBounds(703, 126, 76, 54);
 		btnSubGroupCount.addActionListener(this);
 		add(btnSubGroupCount);
 		
 		txtfldNumOfGroups = new JTextField();
 		txtfldNumOfGroups.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		txtfldNumOfGroups.setText("1");
-		txtfldNumOfGroups.setBounds(623, 89, 36, 27);;
+		txtfldNumOfGroups.setBounds(829, 88, 36, 27);;
 		txtfldNumOfGroups.addActionListener(this);
 		add(txtfldNumOfGroups);
 		txtfldNumOfGroups.setColumns(10);
 		
 		btnCreateGroup = new JButton("Create Groups");
 		btnCreateGroup.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		btnCreateGroup.setBounds(511, 192, 162, 66);
+		btnCreateGroup.setBounds(703, 191, 162, 66);
 		btnCreateGroup.addActionListener(this);
 		add(btnCreateGroup);
 		

@@ -59,7 +59,7 @@ public class Model {
 
 	public ResultSet getStudentsInfo() {
 		ResultSet rs = null;
-		String query = "SELECT * FROM students";
+		String query = "SELECT name AS 'Name', math_grade AS 'Math', science_grade AS 'Science', english_grade AS 'English', filipino_grade AS 'Filipino', socialstudies_grade AS 'Social Studies', algocom_grade AS 'ALGOCOM' FROM students";
                 PreparedStatement pst;
 		try{
 	        pst = conn.prepareStatement(query);

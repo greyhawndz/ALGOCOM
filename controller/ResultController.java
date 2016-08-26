@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Random;
 
 import javax.swing.DefaultListModel;
@@ -17,7 +18,7 @@ public class ResultController{
 	
 	private MainFrame mainFrame;
 	private int numOfGroups;
-	private HashMap<String, ArrayList<Student>> resultMap;
+	private LinkedHashMap<String, ArrayList<Student>> resultMap;
         private Model model;
         private ArrayList<Student> students;
         private ArrayList<Cluster> clusters;
@@ -28,7 +29,7 @@ public class ResultController{
 	public ResultController(MainFrame mainFrame, int numOfGroups) {
 		this.mainFrame = mainFrame;
 		this.numOfGroups = numOfGroups;
-		this.resultMap = new HashMap<String, ArrayList<Student>>();
+		this.resultMap = new LinkedHashMap<String, ArrayList<Student>>();
                 model = new Model();
                 students = model.getListOfStudents();
                 clusters = new ArrayList();

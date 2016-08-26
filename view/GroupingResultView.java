@@ -34,7 +34,7 @@ public class GroupingResultView extends JPanel implements ActionListener, KeyLis
 	private JButton btnBack;
 	
 	public GroupingResultView(ResultController resultController) {
-		this.setBounds(0, 0, 683, 434);
+		this.setBounds(0, 0, 875, 434);
 		
 		controller = resultController;
 		controller.performAlgorithm();
@@ -57,13 +57,13 @@ public class GroupingResultView extends JPanel implements ActionListener, KeyLis
 		refreshStudentList();
         
         jscrllpnlTable=new JScrollPane(resultTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        jscrllpnlTable.setBounds(196, 11, 477, 313);
+        jscrllpnlTable.setBounds(196, 11, 669, 313);
          jscrllpnlTable.setVisible(true);
          setLayout(null);
          add(jscrllpnlTable);
          
          btnBack = new JButton("Back");
-         btnBack.setBounds(10, 367, 89, 23);
+         btnBack.setBounds(10, 367, 164, 23);
          btnBack.addActionListener(this);
          add(btnBack);
 	}
