@@ -1,8 +1,19 @@
 package driver;
 
+import java.io.IOException;
+import java.net.URL;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
+import model.MakeSound;
 import view.MainFrame;
 
 public class StudentGrouperMain {
@@ -25,6 +36,6 @@ public class StudentGrouperMain {
 	    catch(Exception e){ 
 	    }
 		new MainFrame("Computing for Good").renderView("InputStudents");
+		new MakeSound().playSound("src/jeopardy.wav");
 	}
-
 }

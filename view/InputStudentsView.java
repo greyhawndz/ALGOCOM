@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Random;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -14,8 +15,10 @@ import model.Model;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.JComboBox;
@@ -42,6 +45,8 @@ public class InputStudentsView extends JPanel implements ActionListener, KeyList
 	
 	private JTable resultTable;
 	private JScrollPane jscrllpnlTable;
+	
+	private Timer updateTimer;
 	
 	public InputStudentsView(MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
@@ -103,6 +108,20 @@ public class InputStudentsView extends JPanel implements ActionListener, KeyList
 		btnAddStudent.setBounds(24, 346, 193, 66);
 		btnAddStudent.addActionListener(this);
 		add(btnAddStudent);
+		
+		
+		updateTimer = new Timer(100, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	Random rand = new Random();
+	    		float r = rand.nextFloat();
+	    		float g = rand.nextFloat();
+	    		float b = rand.nextFloat();
+	    		Color randomColor = new Color(r, g, b);
+	    		setBackground(randomColor);
+            }
+        });
+		updateTimer.start();
 	}
 
 	public int getNumberOfGroups(){
