@@ -39,12 +39,23 @@ public class Model {
                     e.printStackTrace();
                 }
 		//TODO ADD TO listOfStudents ARRAYLIST
-		return listOfStudents;
+		return listOfStudents; 
 	}
 
 	public void addNewStudent(Student student) {
-		//TODO SQL INSERT QUERY HERE	
-}
+		//TODO SQL INSERT QUERY HERE
+                PreparedStatement pst;
+                String sql = "INSERT INTO students (name, math_grade, science_grade, english_grade, filipino_grade, socialstudies_grade, algocom_grade) VALUES ("
+                             + student.getName() + "," + student.getMathGrade() + "," + student.getScienceGrade() + "," + student.getEnglishGrade() + "," + student.getFilipinoGrade() + "," + student.getSocialStudiesGrade() + "," +student.getAlgocomGrade() + ")";
+                try{
+                    pst = conn.prepareStatement(sql);
+                    pst.executeQuery();
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
+        }
+        
 
 	public ResultSet getStudentsInfo() {
 		ResultSet rs = null;
