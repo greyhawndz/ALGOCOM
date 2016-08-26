@@ -21,7 +21,6 @@ import javax.swing.table.DefaultTableModel;
 
 import controller.ResultController;
 import controller.StudentController;
-import java.util.ArrayList;
 
 public class GroupingResultView extends JPanel implements ActionListener, KeyListener, ListSelectionListener {
 	

@@ -8,8 +8,6 @@ public class Student {
 	private float filipinoGrade;
 	private float socialStudiesGrade;
 	private float algocomGrade;
-        private float average;
-        private int assignId;
 
 	public Student() {}
 	
@@ -23,27 +21,7 @@ public class Student {
 		this.filipinoGrade = filipinoGrade;
 		this.socialStudiesGrade = socialStudiesGrade;
 		this.algocomGrade = algocomGrade;
-                this.average = (mathGrade + scienceGrade + englishGrade + filipinoGrade + socialStudiesGrade + algocomGrade)/6;
 	}
-
-        public int getAssignId() {
-            return assignId;
-        }
-
-        public void setAssignId(int assignId) {
-            this.assignId = assignId;
-        }
-        
-        
-        public float getAverage() {
-            return average;
-        }
-
-        public void setAverage(float average) {
-            this.average = average;
-        }
-        
-        
 
 	public String getName() {
 		return name;

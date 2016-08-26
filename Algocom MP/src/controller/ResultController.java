@@ -2,13 +2,10 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ListModel;
 import javax.swing.table.DefaultTableModel;
-import model.Cluster;
-import model.Model;
 
 import model.Student;
 import view.MainFrame;
@@ -18,188 +15,22 @@ public class ResultController{
 	private MainFrame mainFrame;
 	private int numOfGroups;
 	private HashMap<String, ArrayList<Student>> resultMap;
-        private Model model;
-        private ArrayList<Student> students;
-        private ArrayList<Cluster> clusters;
-        private boolean noChange = false;
-        private float min;
-        private float max;
+
 	public ResultController(MainFrame mainFrame, int numOfGroups) {
 		this.mainFrame = mainFrame;
 		this.numOfGroups = numOfGroups;
 		this.resultMap = new HashMap<String, ArrayList<Student>>();
-                model = new Model();
-                students = model.getListOfStudents();
-                clusters = new ArrayList();
 	}
 
 	public void performAlgorithm() {
 		// PANG TEST LANG TO
-		
+		ArrayList<Student> fuck = new ArrayList<>();
+		fuck.add(new Student("fuck", 1, 1, 1, 1, 1, 1));
+		resultMap.put("Group1", fuck);
 		// PANG TEST LANG TO
-		initializeClusters();
-                assignToInitialCluster();
-                while(noChange == false){
-                    iterate();
-                    assignToNewCluster();
-                }
-                System.out.println("Final");
-		for(Cluster cluster : clusters){
-                    ArrayList<Student> output = cluster.getStudents();
-                    System.out.println("Cluster " +cluster.getId());
-                    for(Student student : output){
-                        System.out.println(student.getName());
-                    }
-                    System.out.println("");
-                }
+		
+		//TODO ALGO HERE, save to resultMap
 	}
-        
-        public void initializeClusters(){
-            float upperBound = getUpperBounds();
-            float lowerBound = getLowerBounds();
-            for(int i = 0; i < numOfGroups;i++){
-                float centroid = randomWithRange(lowerBound, upperBound);
-                Cluster cluster = new Cluster(i);
-                cluster.setCentroid(centroid);
-                System.out.println("Cluster " +cluster.getId() + " centroid: " +centroid);
-                clusters.add(cluster);
-            }
-        }
-        
-        public void assignToInitialCluster(){
-            int assignId;
-            float temp; 
-                for(Student student : students){
-                    assignId = 0;
-                    
-                    temp = Math.abs(student.getAverage() - clusters.get(0).getCentroid());
-                    for(int i = 0; i < clusters.size(); i++){
-                        int id = clusters.get(i).getId();
-                        
-                        float distance = Math.abs(student.getAverage() - clusters.get(i).getCentroid());
-                        //System.out.println("Distance: " + distance);
-                        //System.out.println("Temp: " + temp);
-                        if(distance <= temp){
-                            temp = distance;
-                            assignId = id;
-                            //System.out.println("assignid: " +assignId);
-                        }
-                        
-                    }
-                    
-                    clusters.get(assignId).addStudent(student);
-                    student.setAssignId(assignId);
-                }
-                System.out.println("Initial");
-                for(Cluster cluster : clusters){
-                    ArrayList<Student> output = cluster.getStudents();
-                    System.out.println("Cluster " +cluster.getId());
-                    for(Student student : output){
-                        System.out.println(student.getName());
-                    }
-                    System.out.println("");
-                }
-        }
-        
-        public void assignToNewCluster(){
-            int assignId;
-            float temp; 
-            noChange = true;
-                for(Student student : students){
-                    assignId = 0;
-                    System.out.println(student.getName());
-                    temp = Math.abs(student.getAverage() - clusters.get(0).getCentroid());
-                    for(int i = 0; i < clusters.size(); i++){
-                        int id = clusters.get(i).getId();
-                        
-                        float distance = Math.abs(student.getAverage() - clusters.get(i).getCentroid());
-                  //      System.out.println("Distance: " + distance);
-                  //      System.out.println("Temp: " + temp);
-                        if(distance <= temp){
-                            temp = distance;
-                            assignId = id;
-                  //          System.out.println("assignid: " +assignId);
-                        }
-                        
-                    }
-                    if(assignId != student.getAssignId()){
-                        noChange = false;
-                    }
-                    clusters.get(assignId).addStudent(student);
-                    student.setAssignId(assignId);
-                }
-                System.out.println("New group");
-                for(Cluster cluster : clusters){
-                    ArrayList<Student> output = cluster.getStudents();
-                    System.out.println("Cluster " +cluster.getId());
-                    for(Student student : output){
-                        System.out.println(student.getName());
-                    }
-                    System.out.println("");
-                }
-        }
-        
-        public void iterate(){
-            ArrayList<Student> students;
-            float newCentroid = 0;
-            for(Cluster cluster : clusters){
-                students = cluster.getStudents();
-                for(Student student : students){
-                   newCentroid += student.getAverage();
-                }
-                if(students.size() > 0)
-                newCentroid/= students.size();
-                else{
-                    newCentroid = randomWithRange(min,max);
-                }
-                
-                System.out.println("New centroid: " +newCentroid);
-                cluster.setCentroid(newCentroid);
-                cluster.clear();
-            }
-        }
-        
-        public float randomWithRange(float min, float max){
-            float range = max - min;
-            Random rand = new Random();
-         //   System.out.println("Range: " + range);
-            float random = (rand.nextFloat() * range) + min;
-         //   System.out.println("Random: " +random);
-            return random;
-        }
-        
-        public float getLowerBounds(){
-            float temp = 0;
-            float lowest;
-            lowest = students.get(0).getAverage();
-            for(Student student : students){
-                temp = student.getAverage();
-           //     System.out.println("Low: " + temp);
-                if(temp <= lowest){
-                    lowest = temp;
-                }
-            }
-            System.out.println("Lowest: "+ lowest);
-            min = lowest;
-            return lowest;
-        }
-        
-        public float getUpperBounds(){
-            float temp = 0;
-            float highest;
-            highest = students.get(0).getAverage();
-            for(Student student: students){
-                temp = student.getAverage();
-           //     System.out.println("High: " +temp);
-                if(temp > highest){
-                    highest = temp;
-                }
-            }
-            System.out.println("Highest: " +highest);
-            max = highest;
-            return highest;
-        }
-        
 
 	public ListModel getListOfGroups() {
 		DefaultListModel<String> groupList = new DefaultListModel<>();
