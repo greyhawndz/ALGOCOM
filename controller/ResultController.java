@@ -24,6 +24,7 @@ public class ResultController{
         private boolean noChange = false;
         private float min;
         private float max;
+        private int maxClusterSize;
 	public ResultController(MainFrame mainFrame, int numOfGroups) {
 		this.mainFrame = mainFrame;
 		this.numOfGroups = numOfGroups;
@@ -31,6 +32,7 @@ public class ResultController{
                 model = new Model();
                 students = model.getListOfStudents();
                 clusters = new ArrayList();
+                maxClusterSize = Math.floorDiv(students.size(), numOfGroups);
 	}
 
 	public void performAlgorithm() {
@@ -61,6 +63,8 @@ public class ResultController{
                 float centroid = randomWithRange(lowerBound, upperBound);
                 Cluster cluster = new Cluster(i);
                 cluster.setCentroid(centroid);
+                cluster.setMaxSize(maxClusterSize);
+                cluster.setInitialCentroid(centroid);
                 System.out.println("Cluster " +cluster.getId() + " centroid: " +centroid);
                 clusters.add(cluster);
             }
@@ -69,6 +73,7 @@ public class ResultController{
         public void assignToInitialCluster(){
             int assignId;
             float temp; 
+            ArrayList<Cluster> bestCluster = new ArrayList();
                 for(Student student : students){
                     assignId = 0;
                     
@@ -79,9 +84,14 @@ public class ResultController{
                         float distance = Math.abs(student.getAverage() - clusters.get(i).getCentroid());
                         //System.out.println("Distance: " + distance);
                         //System.out.println("Temp: " + temp);
+                        if(clusters.get(i).getMemberCount() >= clusters.get(i).getMaxSize()){
+                            temp = distance;
+                            continue;
+                        }
                         if(distance <= temp){
                             temp = distance;
                             assignId = id;
+                            bestCluster.add(clusters.get(i));
                             //System.out.println("assignid: " +assignId);
                         }
                         
@@ -107,18 +117,20 @@ public class ResultController{
             noChange = true;
                 for(Student student : students){
                     assignId = 0;
-                    System.out.println(student.getName());
                     temp = Math.abs(student.getAverage() - clusters.get(0).getCentroid());
                     for(int i = 0; i < clusters.size(); i++){
                         int id = clusters.get(i).getId();
                         
                         float distance = Math.abs(student.getAverage() - clusters.get(i).getCentroid());
-                  //      System.out.println("Distance: " + distance);
-                  //      System.out.println("Temp: " + temp);
+                        
+                        if(clusters.get(i).getMemberCount() >= clusters.get(i).getMaxSize()){
+                            temp = distance;
+                            continue;
+                        }
                         if(distance <= temp){
                             temp = distance;
                             assignId = id;
-                  //          System.out.println("assignid: " +assignId);
+                           System.out.println("assignid: " +assignId);
                         }
                         
                     }
@@ -144,18 +156,21 @@ public class ResultController{
             float newCentroid = 0;
             for(Cluster cluster : clusters){
                 students = cluster.getStudents();
+                Student phantomStudent = new Student();
+                phantomStudent.setAverage(cluster.getInitialCentroid());
+                students.add(phantomStudent);
                 for(Student student : students){
                    newCentroid += student.getAverage();
                 }
-                if(students.size() > 0)
-                newCentroid/= students.size();
-                else{
-                    newCentroid = randomWithRange(min,max);
-                }
+                
+                
+                newCentroid/= students.size() + 1;
+                
                 
                 System.out.println("New centroid: " +newCentroid);
                 cluster.setCentroid(newCentroid);
                 cluster.clear();
+                cluster.setMemberCount(0);
             }
         }
         
