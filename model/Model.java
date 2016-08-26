@@ -45,11 +45,18 @@ public class Model {
 	public void addNewStudent(Student student) {
 		//TODO SQL INSERT QUERY HERE
                 PreparedStatement pst;
-                String sql = "INSERT INTO students (name, math_grade, science_grade, english_grade, filipino_grade, socialstudies_grade, algocom_grade) VALUES ("
-                             + student.getName() + "," + student.getMathGrade() + "," + student.getScienceGrade() + "," + student.getEnglishGrade() + "," + student.getFilipinoGrade() + "," + student.getSocialStudiesGrade() + "," +student.getAlgocomGrade() + ")";
+                String sql = "INSERT INTO students (name, math_grade, science_grade, english_grade, filipino_grade, socialstudies_grade, algocom_grade) VALUES (?,?,?,?,?,?,?)";
+                
                 try{
                     pst = conn.prepareStatement(sql);
-                    pst.executeQuery();
+                    pst.setString(1,student.getName());
+                    pst.setFloat(2, student.getMathGrade());
+                    pst.setFloat(3, student.getScienceGrade());
+                    pst.setFloat(4, student.getEnglishGrade());
+                    pst.setFloat(5, student.getFilipinoGrade());
+                    pst.setFloat(6, student.getSocialStudiesGrade());
+                    pst.setFloat(7, student.getAlgocomGrade());
+                    pst.executeUpdate();
                 }
                 catch(Exception e){
                     e.printStackTrace();

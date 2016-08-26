@@ -26,12 +26,19 @@ public class ResultController{
         private float max;
         private int maxClusterSize;
 	public ResultController(MainFrame mainFrame, int numOfGroups) {
+                if(clusters!= null){
+                    clearClusters();
+                }
+                else{
+                    clusters = new ArrayList();
+                }
 		this.mainFrame = mainFrame;
 		this.numOfGroups = numOfGroups;
 		this.resultMap = new HashMap<String, ArrayList<Student>>();
                 model = new Model();
                 students = model.getListOfStudents();
-                clusters = new ArrayList();
+                
+                
                 maxClusterSize = Math.floorDiv(students.size(), numOfGroups);
 	}
 
@@ -76,7 +83,7 @@ public class ResultController{
             float temp; 
             ArrayList<Cluster> bestCluster = new ArrayList();
                 for(Student student : students){
-                    assignId = 0;
+                    assignId = clusters.size()-1;
                     
                     temp = Math.abs(student.getAverage() - clusters.get(0).getCentroid());
                     for(int i = 0; i < clusters.size(); i++){
@@ -87,6 +94,8 @@ public class ResultController{
                         //System.out.println("Temp: " + temp);
                         if(clusters.get(i).getMemberCount() >= clusters.get(i).getMaxSize()){
                             temp = distance;
+                            System.out.println("Clusters is full");
+                            assignId++;
                             continue;
                         }
                         if(distance <= temp){
@@ -107,6 +116,7 @@ public class ResultController{
                     System.out.println("Cluster " +cluster.getId());
                     for(Student student : output){
                         System.out.println(student.getName());
+                        
                     }
                     System.out.println("");
                 }
@@ -117,7 +127,7 @@ public class ResultController{
             float temp; 
             noChange = true;
                 for(Student student : students){
-                    assignId = 0;
+                    assignId = clusters.size()-1;
                     temp = Math.abs(student.getAverage() - clusters.get(0).getCentroid());
                     for(int i = 0; i < clusters.size(); i++){
                         int id = clusters.get(i).getId();
@@ -126,6 +136,8 @@ public class ResultController{
                         
                         if(clusters.get(i).getMemberCount() >= clusters.get(i).getMaxSize()){
                             temp = distance;
+                            
+                            System.out.println("Cluster is full");
                             continue;
                         }
                         if(distance <= temp){
@@ -224,6 +236,12 @@ public class ResultController{
 		}
 		return groupList;
 	}
+        
+        public void clearClusters(){
+            for(Cluster cluster: clusters){
+                cluster.clear();
+            }
+        }
 
 	public void goBack() {
 		mainFrame.renderView("InputStudents");
@@ -248,7 +266,7 @@ public class ResultController{
 			
 			row++;
 		}
-		
+		//clearClusters();
 		return new DefaultTableModel(rowData, columnNames);
 	}
 

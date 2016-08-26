@@ -17,12 +17,14 @@ public class Cluster {
         private float initialCentroid;
 	private int id;
         private int maxSize;
-	private int memberCount = 0;
+	private int memberCount;
+        private boolean isFull = false;
 	//Creates a new Cluster
 	public Cluster(int id) {
 		this.id = id;
 		this.points = new ArrayList<>();
 		this.centroid = 0;
+                memberCount = 0;
 	}
  
 	public ArrayList getStudents() {
@@ -32,7 +34,14 @@ public class Cluster {
 	public void addStudent(Student point) {
 		points.add(point);
                 memberCount++;
+                if(memberCount >= maxSize){
+                    isFull = true;
+                }
 	}
+        
+    public boolean checkIfFull(){
+        return isFull;
+    }
 
     public int getMemberCount() {
         return memberCount;
@@ -85,6 +94,7 @@ public class Cluster {
 	
 	public void clear() {
 		points.clear();
+                memberCount = 0;
 	}
 	
 	public void plotCluster() {
