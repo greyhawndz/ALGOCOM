@@ -46,13 +46,14 @@ public class ResultController{
                     assignToNewCluster();
                 }
                 System.out.println("Final");
-		for(Cluster cluster : clusters){
+                for(Cluster cluster : clusters){
                     ArrayList<Student> output = cluster.getStudents();
-                    System.out.println("Cluster " +cluster.getId());
-                    for(Student student : output){
-                        System.out.println(student.getName());
-                    }
-                    System.out.println("");
+//                    System.out.println("Cluster " +cluster.getId());
+//                    for(Student student : output){
+//                        System.out.println(student.getName());
+//                    }
+//                    System.out.println("");
+                    resultMap.put("Group " + cluster.getId(), output);
                 }
 	}
         
