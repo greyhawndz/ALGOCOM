@@ -43,15 +43,16 @@ public class AddNewStudentFrame extends JFrame implements ActionListener {
 	public AddNewStudentFrame(StudentController controller) {
 		this.controller = controller;
 		/** Frame setup */
+		this.setTitle("Add a Student");
 		this.setResizable(false);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		this.setBounds(0, 0, 288, 339);
+		this.setBounds(0, 0, 288, 355);
 		
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{54, 86, 77, 62, 0};
-		gridBagLayout.rowHeights = new int[]{50, 20, 20, 21, 20, 20, 20, 20, 35, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{50, 20, 20, 21, 20, 20, 20, 20, 20, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
