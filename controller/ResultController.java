@@ -84,8 +84,7 @@ public class ResultController{
             float temp; 
             ArrayList<Cluster> bestCluster = new ArrayList();
                 for(Student student : students){
-                    assignId = clusters.size()-1;
-                    
+                    assignId = clusters.size()-1; 
                     temp = Math.abs(student.getAverage() - clusters.get(0).getCentroid());
                     for(int i = 0; i < clusters.size(); i++){
                         int id = clusters.get(i).getId();
@@ -96,7 +95,7 @@ public class ResultController{
                         if(clusters.get(i).getMemberCount() >= clusters.get(i).getMaxSize()){
                             temp = distance;
                             System.out.println("Clusters is full");
-                            assignId++;
+                            
                             continue;
                         }
                         if(distance <= temp){
