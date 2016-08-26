@@ -2,17 +2,17 @@ package model;
 
 public class Student {
 	private String name;
-	private float mathGrade;
-	private float scienceGrade;
-	private float englishGrade;
-	private float filipinoGrade;
-	private float socialStudiesGrade;
-	private float algocomGrade;
+	private int mathGrade;
+	private int scienceGrade;
+	private int englishGrade;
+	private int filipinoGrade;
+	private int socialStudiesGrade;
+	private int algocomGrade;
 
 	public Student() {}
 	
-	public Student(String name, float mathGrade, float scienceGrade, float englishGrade, float filipinoGrade,
-			float socialStudiesGrade, float algocomGrade) {
+	public Student(String name, int mathGrade, int scienceGrade, int englishGrade, int filipinoGrade,
+			int socialStudiesGrade, int algocomGrade) {
 		super();
 		this.name = name;
 		this.mathGrade = mathGrade;
@@ -31,7 +31,7 @@ public class Student {
 		this.name = name;
 	}
 
-	public float getMathGrade() {
+	public int getMathGrade() {
 		return mathGrade;
 	}
 
@@ -39,7 +39,7 @@ public class Student {
 		this.mathGrade = mathGrade;
 	}
 
-	public float getScienceGrade() {
+	public int getScienceGrade() {
 		return scienceGrade;
 	}
 
@@ -47,7 +47,7 @@ public class Student {
 		this.scienceGrade = scienceGrade;
 	}
 
-	public float getEnglishGrade() {
+	public int getEnglishGrade() {
 		return englishGrade;
 	}
 
@@ -55,7 +55,7 @@ public class Student {
 		this.englishGrade = englishGrade;
 	}
 
-	public float getFilipinoGrade() {
+	public int getFilipinoGrade() {
 		return filipinoGrade;
 	}
 
@@ -63,7 +63,7 @@ public class Student {
 		this.filipinoGrade = filipinoGrade;
 	}
 
-	public float getSocialStudiesGrade() {
+	public int getSocialStudiesGrade() {
 		return socialStudiesGrade;
 	}
 
@@ -71,7 +71,7 @@ public class Student {
 		this.socialStudiesGrade = socialStudiesGrade;
 	}
 
-	public float getAlgocomGrade() {
+	public int getAlgocomGrade() {
 		return algocomGrade;
 	}
 
